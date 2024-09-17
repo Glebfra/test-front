@@ -3,8 +3,12 @@ import axios from "axios";
 import ProductCart from "./ProductCart.jsx";
 
 function Cart() {
-    const [cartData, setCartData] = useState([]);
+    const isLogged = localStorage.getItem('token') != null;
+    if (!isLogged) {
+        window.location.href = '/login/';
+    }
 
+    const [cartData, setCartData] = useState([]);
     useEffect(() => {
         axios.get(
             'http://localhost:1337/api/users/me?populate[products][populate][0]=image',
